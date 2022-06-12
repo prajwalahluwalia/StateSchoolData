@@ -1,0 +1,47 @@
+{% extends 'basic_app/basic_app_base.html' %}
+
+{% block content %}
+<div class = "jumbotron">
+    <h1> Welcome to the School Detail Page.</h1>
+    <h2> SChool details: </h2>
+    <p> Name: {{ school_detail.name }}</p>
+    <p> Principal: {{ school_detail.principal }}</p>
+    <p> Location: {{ school_detail.location }}</p>
+
+    <h3> Students </h3>
+    <!-- students is related_name in the model  -->
+    <div class="container">
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Update Entry</th>
+                <th>Delete Entry</th>
+            <tr></tr>
+            {% for student in school_detail.students.all %}
+                <tr>
+                    <th>{{ student.id }}</th>
+                    <th>{{ student.name }}</th>
+                    <th>{{ student.age }}</th>
+                    <th> <a class='btn btn-warning' href="{% url 'basic_app:update_student' pk=student.pk %}">Update</a> </th>
+                    <th><a class='btn btn-danger' href="{% url 'basic_app:delete_student' pk=student.pk %}">Delete</a></th>
+                </tr>
+    
+            {% endfor %}
+        </table>
+         
+    </div>
+    <div class="container">
+        <p><a class='btn btn-primary' href="{% url 'basic_app:create_student' %}">Add Student Entry</a></p>
+    </div>
+</div>
+
+<div class = "container">
+    <p>
+        <a class='btn btn-warning' href="{% url 'basic_app:update' pk=school_detail.pk %}">Update School Entry</a>
+        <a class='btn btn-danger' href="{% url 'basic_app:delete' pk=school_detail.pk %}">Delete School Entry</a>
+    </p>
+</div>
+
+{% endblock %}
